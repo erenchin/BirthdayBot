@@ -17,8 +17,8 @@ PYTHONIOENCODING = "UTF-8"
 
 def main():
     OWNER = password.OWNER
-    bdToday = ""
-    bdAfter = ""
+    bd_today = ""
+    bday_7_days = ""
 
     logging.basicConfig(
         format='%(asctime)s - %(levelname)s - %(message)s',
@@ -32,20 +32,43 @@ def main():
 
     for _ in data:
         if(find.is_near(str(_[1])) == 1):
-            bdToday += (_[0] + _[1] + _[2] + "\n")
+            bd_today += (_[0] + _[1] + _[2] + "\n")
         elif(find.is_near(str(_[1])) == 2):
-            bdAfter += (_[0] + _[1] + _[2] + "\n")
+            bday_7_days += (_[0] + _[1] + _[2] + "\n")
 
-    if(len(bdToday) != 0 or len(bdAfter) != 0):
-        if(len(bdToday) != 0 and len(bdAfter) != 0):
-            msg = "Them birthday is in today:\n" + bdToday + "\n" + \
-                "Them birthday is in a few days: \n" + bdAfter
-        elif(len(bdToday) != 0 and len(bdAfter) == 0):
-            msg = "Привет!\n\n Напоминаю, что сегодня у этих замечательных людей день рождения: \n\n" + \
-                bdAfter + "\n Если нет подарка, срочно беги! \n\n С уважением BirthdayBot!"
-        elif(len(bdToday) == 0 and len(bdAfter) != 0):
-            msg = "Привет!\n\n Напоминаю, что через 7 дней у этих замечательных людей день рождения: \n\n" + \
-                bdAfter + "\n Не забудь приготовить подарок! \n\n С уважением BirthdayBot!"
+    day0 = len(bd_today)
+    day7 = len(bday_7_days)
+    msg = ""
+
+    if((day0 + day7) > 0):
+        if(day0 > 0):
+            if(day0 > 1):
+                msg = "Today birthday is selebrating:\n"
+            else:
+                msg = "Today birthday are selebrating:\n"
+
+            msg = msg + bd_today + '\n'
+
+        if(day7 > 0):
+            if(day7 > 1):
+                msg = msg + "This employee will have birthday in 7 days:\n"
+            else:
+                msg = msg + "These employees will have they birthdays in 7 days:\n"
+
+            msg = msg + bday_7_days + '\n'
+
+        msg = msg + "Get your presents ready)"
+
+        # msg +
+        # if((day0 != 0) and (day7 != 0)):
+        #     msg = "Them birthday is in today:\n" + bd_today + "\n" + \
+        #         "Them birthday is in a few days: \n" + bday_7_days
+        # elif(len(bd_today) != 0 and len(bday_7_days) == 0):
+        #     msg = "Привет!\n\n Напоминаю, что сегодня у этих замечательных людей день рождения: \n\n" + \
+        #         bday_7_days + "\n Если нет подарка, срочно беги! \n\n С уважением BirthdayBot!"
+        # elif(len(bd_today) == 0 and len(bday_7_days) != 0):
+        #     msg = "Привет!\n\n Напоминаю, что через 7 дней у этих замечательных людей день рождения: \n\n" + \
+        #         bday_7_days + "\n Не забудь приготовить подарок! \n\n С уважением BirthdayBot!"
         #mail.sendMail(msg, mail.initMail())
         bot = rb()
         bot.login()
