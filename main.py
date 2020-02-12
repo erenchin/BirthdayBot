@@ -25,7 +25,16 @@ def main():
         level=logging.INFO
     )
 
-    driver = webdriver.Chrome()
+    try:
+        Options = webdriver.ChromeOptions()
+        Options.add_argument('--headless')
+        Options.add_argument('--no-sandbox')
+        Options.add_argument('--disable-dev-shm-usage')
+        driver = webdriver.Chrome(
+            '/root/serenchin/birthdayBot/chromedriver', chrome_options=Options)
+        logging.info("load webriver")
+    except Exception:
+        logging.info("error load webriver")
 
     auth.first_auth(driver)
     data = find.getDataEmployee(OWNER, driver)
@@ -44,13 +53,13 @@ def main():
             msg = "Привет!\n\n Напоминаю, что сегодня у этих замечательных людей день рождения: \n\n" + \
                 bdAfter + "\n Если нет подарка, срочно беги! \n\n С уважением BirthdayBot!"
         elif(len(bdToday) == 0 and len(bdAfter) != 0):
-            msg = "Привет!\n\n Напоминаю, что через 7 дней у этих замечательных людей день рождения: \n\n" + \
-                bdAfter + "\n Не забудь приготовить подарок! \n\n С уважением BirthdayBot!"
+            msg = "7 days: " + \
+                bdAfter
         #mail.sendMail(msg, mail.initMail())
         bot = rb()
         bot.login()
         bot.send_mess(msg)
-
+        logging.info("succes send msg")
     driver.close()
 
 
