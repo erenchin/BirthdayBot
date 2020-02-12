@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 - *-
 import logging
 import password
 from selenium.webdriver.common.by import By

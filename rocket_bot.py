@@ -1,5 +1,8 @@
+#!/usr/bin/python
+# -*- coding: utf-8 - *-
 from time import sleep
 import password
+import logging
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
@@ -14,12 +17,15 @@ class RocketBot():
         option.add_argument("--disable-infobars")
         option.add_argument("start-maximized")
         option.add_argument("--disable-extensions")
+        option.add_argument('--headless')
+        option.add_argument('--no-sandbox')
+        option.add_argument('--disable-dev-shm-usage')
 
         option.add_experimental_option("prefs", {"profile.default_content_setting_values.notifications": 1
                                                  })
         self.driver = webdriver.Chrome(
             chrome_options=option,
-            executable_path='chromedriver.exe'
+            executable_path='/root/serenchin/birthdayBot/chromedriver'
         )
 
     def __del__(self):
@@ -54,4 +60,7 @@ class RocketBot():
 
         btn = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, "span.rc-message-box__send")))
-        btn.click()
+        try:
+            btn.click()
+        except Exception:
+            logging.info("error btn.click()")

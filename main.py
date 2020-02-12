@@ -17,7 +17,7 @@ PYTHONIOENCODING = "UTF-8"
 
 def main():
     OWNER = password.OWNER
-    bd_today = ""
+    bdToday = ""
     bday_7_days = ""
 
     logging.basicConfig(
@@ -25,19 +25,29 @@ def main():
         level=logging.INFO
     )
 
-    driver = webdriver.Chrome()
+    try:
+        Options = webdriver.ChromeOptions()
+        Options.add_argument('--headless')
+        Options.add_argument('--no-sandbox')
+        Options.add_argument('--disable-dev-shm-usage')
+        driver = webdriver.Chrome(
+            '/root/serenchin/birthdayBot/chromedriver', chrome_options=Options)
+        logging.info("load webriver")
+    except Exception:
+        logging.info("error load webriver")
 
     auth.first_auth(driver)
     data = find.getDataEmployee(OWNER, driver)
 
     for _ in data:
         if(find.is_near(str(_[1])) == 1):
-            bd_today += (_[0] + _[1] + _[2] + "\n")
+            bdToday += (_[0] + _[1] + _[2] + "\n")
         elif(find.is_near(str(_[1])) == 2):
-            bday_7_days += (_[0] + _[1] + _[2] + "\n")
 
-    day0 = len(bd_today)
-    day7 = len(bday_7_days)
+            bdAfter += (_[0] + _[1] + _[2] + "\n")
+
+    day0 = len(bdToday)
+    day7 = len(bdAfter)
     msg = ""
 
     if((day0 + day7) > 0):
@@ -47,7 +57,7 @@ def main():
             else:
                 msg = "Today birthday are selebrating:\n"
 
-            msg = msg + bd_today + '\n'
+            msg = msg + bdToday + '\n'
 
         if(day7 > 0):
             if(day7 > 1):
@@ -55,7 +65,7 @@ def main():
             else:
                 msg = msg + "These employees will have they birthdays in 7 days:\n"
 
-            msg = msg + bday_7_days + '\n'
+            msg = msg + bdAfter + '\n'
 
         msg = msg + "Get your presents ready)"
 
@@ -69,11 +79,11 @@ def main():
         # elif(len(bd_today) == 0 and len(bday_7_days) != 0):
         #     msg = "Привет!\n\n Напоминаю, что через 7 дней у этих замечательных людей день рождения: \n\n" + \
         #         bday_7_days + "\n Не забудь приготовить подарок! \n\n С уважением BirthdayBot!"
-        #mail.sendMail(msg, mail.initMail())
+        # mail.sendMail(msg, mail.initMail())
         bot = rb()
         bot.login()
         bot.send_mess(msg)
-
+        logging.info("succes send msg")
     driver.close()
 
 
