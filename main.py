@@ -17,7 +17,7 @@ PYTHONIOENCODING = "UTF-8"
 
 def main():
     OWNER = password.OWNER
-    bdToday = ""
+    bday_today = ""
     bday_7_days = ""
 
     logging.basicConfig(
@@ -41,13 +41,13 @@ def main():
 
     for _ in data:
         if(find.is_near(str(_[1])) == 1):
-            bdToday += (_[0] + _[1] + _[2] + "\n")
+            bday_today += (_[0] + _[1] + _[2] + "\n")
         elif(find.is_near(str(_[1])) == 2):
 
-            bdAfter += (_[0] + _[1] + _[2] + "\n")
+            bday_7_days += (_[0] + _[1] + _[2] + "\n")
 
-    day0 = len(bdToday)
-    day7 = len(bdAfter)
+    day0 = len(bday_today)
+    day7 = len(bday_7_days)
     msg = ""
 
     if((day0 + day7) > 0):
@@ -57,7 +57,7 @@ def main():
             else:
                 msg = "Today birthday are selebrating:\n"
 
-            msg = msg + bdToday + '\n'
+            msg = msg + bday_today + '\n'
 
         if(day7 > 0):
             if(day7 > 1):
@@ -65,7 +65,7 @@ def main():
             else:
                 msg = msg + "These employees will have they birthdays in 7 days:\n"
 
-            msg = msg + bdAfter + '\n'
+            msg = msg + bday_7_days + '\n'
 
         msg = msg + "Get your presents ready)"
 
