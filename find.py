@@ -20,8 +20,7 @@ def getData(driver, link):
             EC.presence_of_element_located((By.CSS_SELECTOR, "time.p1_liga"))
         )
         name = element_1.text.split("\n")[0]  # clear previous 'last name'
-        name = name.split(' ').pop(-1)  # clear patronymic (third name)
-
+        # clear patronymic (third name)
         birthDay = element_2.get_attribute('datetime')
         return (name, birthDay, link)
     except Exception:
