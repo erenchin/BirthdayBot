@@ -18,7 +18,7 @@ def getData(driver, link):
         element_2 = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, "time.p1_liga"))
         )
-        name = element_1.text.replace("\n", "")
+        name = element_1.text.split("\n")[0]
         birthDay = element_2.get_attribute('datetime')
         return (name, birthDay, link)
     except Exception:
@@ -33,7 +33,7 @@ def is_near(str_date):
     tday = datetime.date.today()
     bday = datetime.date(tday.year, mounth, day)
 
-    tdelta = datetime.timedelta(days=4)
+    tdelta = datetime.timedelta(days=7)
     if(tday == bday):
         return 1
     if(tdelta + tday == bday):
@@ -51,11 +51,11 @@ def getDataEmployee(owner, driver):
         )
         master = element.find_element(By.XPATH,
                                       "../..").find_elements_by_tag_name('a')
-        for _ in master:
-            links.append(_.get_attribute('href'))
+        for html_a in master:
+            links.append(html_a.get_attribute('href'))
 
-        for _ in links:
-            dat = getData(driver, _)
+        for link in links:
+            dat = getData(driver, link)
             if(len(dat[0]) == 0):
                 logging.info("employee.drop")
                 continue
