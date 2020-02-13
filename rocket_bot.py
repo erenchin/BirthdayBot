@@ -3,6 +3,7 @@
 from time import sleep
 import password
 import logging
+import mail
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
@@ -33,22 +34,25 @@ class RocketBot():
 
     def login(self):
 
-        self.driver.get('https://rc.phoenixit.ru/group/vtb_hb_tube_test')
+        try:
+            self.driver.get('https://rc.phoenixit.ru/group/vtb_hb_tube_test')
 
-        login_lable = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.NAME, "emailOrUsername")))
-        login_lable.send_keys(password.RB_LOGIN)
+            login_lable = WebDriverWait(self.driver, 10).until(
+                EC.presence_of_element_located((By.NAME, "emailOrUsername")))
+            login_lable.send_keys(password.RB_LOGIN)
 
-        pass_lable = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.NAME, "pass")))
-        pass_lable.send_keys(password.RB_PASSWORD)
+            pass_lable = WebDriverWait(self.driver, 10).until(
+                EC.presence_of_element_located((By.NAME, "pass")))
+            pass_lable.send_keys(password.RB_PASSWORD)
 
-        btn = self.driver.find_element_by_xpath(
-            '/html/body/section/div/form/div[2]/button[1]')
-        btn.click()
+            btn = self.driver.find_element_by_xpath(
+                '/html/body/section/div/form/div[2]/button[1]')
+            btn.click()
 
-        # TODO: put link in var
-        print("[SUCCESS]\tlogging at " + "https://rc.phoenixit.ru/home")
+            # TODO: put link in var
+            print("[SUCCESS]\tlogging at " + "https://rc.phoenixit.ru/home")
+        except Exception:
+            mail.sendMail("exception rocket.chat - login", mail.initMail())
 
     def select_chat(self):
         self.driver.get('https://rc.phoenixit.ru/group/vtb_hb_tube_test')
