@@ -5,6 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 import auth
 import logging
 import datetime
+import mail
 
 
 def getData(driver, link):
@@ -63,4 +64,5 @@ def getDataEmployee(owner, driver):
             logging.info("employee.name: " + dat[0])
         return dataArray
     except Exception:
-        logging.info("Exception master")
+        logging.info("Exception getEmployee")
+        mail.sendMail("Exception getEmployee", mail.initMail())
