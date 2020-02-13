@@ -52,7 +52,7 @@ def main():
 
     if((day0 + day7) > 0):
         if(day0 > 0):
-            if(day0 > 1):
+            if(day0 is 1):
                 msg = "Today birthday is selebrating:\n"
             else:
                 msg = "Today birthday are selebrating:\n"
@@ -60,7 +60,7 @@ def main():
             msg = msg + bday_today + '\n'
 
         if(day7 > 0):
-            if(day7 > 1):
+            if(day7 is 1):
                 msg = msg + "This employee will have birthday in 7 days:\n"
             else:
                 msg = msg + "These employees will have they birthdays in 7 days:\n"
