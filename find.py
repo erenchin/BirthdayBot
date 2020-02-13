@@ -18,11 +18,13 @@ def getData(driver, link):
         element_2 = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, "time.p1_liga"))
         )
-        name = element_1.text.split("\n")[0]
+        name = element_1.text.split("\n")[0]  # clear previous 'last name'
+        name = name.split(' ').pop(-1)  # clear patronymic (third name)
+
         birthDay = element_2.get_attribute('datetime')
         return (name, birthDay, link)
     except Exception:
-        logging.info("exception.link: " + link)
+        logging.warn("exception.link: " + link)
     return("", 0, 0)
 
 
@@ -33,12 +35,16 @@ def is_near(str_date):
     tday = datetime.date.today()
     bday = datetime.date(tday.year, mounth, day)
 
-    tdelta = datetime.timedelta(days=7)
+    tdelta_7 = datetime.timedelta(days=7)
+    tdelta_3 = datetime.timedelta(days=3)
+
     if(tday == bday):
         return 1
-    if(tdelta + tday == bday):
+    if(tdelta_3 + tday == bday):
         return 2
-    return (0)
+    if(tdelta_7 + tday == bday):
+        return 3
+    return 0
 
 
 def getDataEmployee(owner, driver):
@@ -62,5 +68,6 @@ def getDataEmployee(owner, driver):
             dataArray.append(dat)
             logging.info("employee.name: " + dat[0])
         return dataArray
+        # return array of information about person: [[name],[birthday],[link]]
     except Exception:
-        logging.info("Exception master")
+        logging.warn("Exception master")
