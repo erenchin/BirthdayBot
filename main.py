@@ -63,34 +63,37 @@ def main():
     if((day0 + day3 + day7) > 0):
         if(day0 > 0):
             if(day0 > 1):
-                msg = "Today birthday is selebrating:\n"
+                msg = msg + locale.TODAY_1
             else:
-                msg = "Today birthday are selebrating:\n"
+                msg = msg + locale.TODAY_MANY
 
             msg = msg + bday_today + '\n'
 
         if(day3 > 0):
             if(day3 is 1):
-                msg = locale.IN_3_DAYS_1
+                msg = msg + locale.IN_3_DAYS_1
             else:
-                msg = locale.IN_3_DAYS_MANY
+                msg = msg + locale.IN_3_DAYS_MANY
 
             msg = msg + bday_3_days + '\n'
 
         if(day7 > 0):
             if(day7 > 1):
-                msg = msg + "This employee will have birthday in 7 days:\n"
+                msg = msg + locale.IN_7_DAYS_1
             else:
-                msg = msg + "These employees will have they birthdays in 7 days:\n"
+                msg = msg + locale.IN_7_DAYS_MANY
 
             msg = msg + bday_7_days + '\n'
 
-        msg = msg + "Get your presents ready)"
+        msg = msg + locale.FINAL
 
         bot = rb()
         bot.login()
         bot.send_mess(msg)
-        logging.info("succes send msg")
+        logging.info("succes send msg to rocket chat")
+    elif((day0 + day3 + day7) is 0):
+        logging.info("there are no b-days today, in 3 or in 7 days")
+
     driver.close()
 
 
