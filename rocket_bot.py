@@ -8,10 +8,16 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+import logging
 
 
 class RocketBot():
     def __init__(self):
+        logging.basicConfig(
+            format='%(asctime)s - %(levelname)s - %(message)s',
+            level=logging.INFO
+        )
+
         option = Options()
 
         option.add_argument("--disable-infobars")
@@ -33,7 +39,7 @@ class RocketBot():
 
     def login(self):
 
-        self.driver.get('https://rc.phoenixit.ru/group/vtb_hb_tube_test')
+        self.driver.get(password.RB_URL)
 
         login_lable = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((By.NAME, "emailOrUsername")))
@@ -48,10 +54,7 @@ class RocketBot():
         btn.click()
 
         # TODO: put link in var
-        print("[SUCCESS]\tlogging at " + "https://rc.phoenixit.ru/home")
-
-    def select_chat(self):
-        self.driver.get('https://rc.phoenixit.ru/group/vtb_hb_tube_test')
+        logging.info("success logging at " + password.RB_URL)
 
     def send_mess(self, message):
         mess_box = WebDriverWait(self.driver, 10).until(
