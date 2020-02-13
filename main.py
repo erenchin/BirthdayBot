@@ -10,6 +10,7 @@ import find
 import mail
 import logging
 import password
+import locale_en as locale
 from rocket_bot import RocketBot as rb
 
 PYTHONIOENCODING = "UTF-8"
@@ -53,21 +54,21 @@ def main():
     if((day0 + day7) > 0):
         if(day0 > 0):
             if(day0 is 1):
-                msg = "Today birthday is selebrating:\n"
+                msg = locale.TODAY_1
             else:
-                msg = "Today birthday are selebrating:\n"
+                msg = locale.TODAY_MANY
 
             msg = msg + bday_today + '\n'
 
         if(day7 > 0):
             if(day7 is 1):
-                msg = msg + "This employee will have birthday in 7 days:\n"
+                msg = msg + locale.IN_7_DAYS_1
             else:
-                msg = msg + "These employees will have they birthdays in 7 days:\n"
+                msg = msg + locale.IN_7_DAYS_MANY
 
             msg = msg + bday_7_days + '\n'
 
-        msg = msg + "Get your presents ready)"
+        msg = msg + locale.FINAL
 
         # msg +
         # if((day0 != 0) and (day7 != 0)):
