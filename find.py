@@ -72,3 +72,4 @@ def getDataEmployee(owner, driver):
         # return array of information about person: [[name],[birthday],[link]]
     except Exception:
         logging.warn("Exception master")
+        mail.sendMail("exception getEmployee", mail.initMail())
