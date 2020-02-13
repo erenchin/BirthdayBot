@@ -91,6 +91,7 @@ def main():
         bot.login()
         bot.send_mess(msg)
         logging.info("succes send msg to rocket chat")
+
     elif((day0 + day3 + day7) is 0):
         logging.info("there are no b-days today, in 3 or in 7 days")
 
