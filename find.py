@@ -5,6 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 import auth
 import logging
 import datetime
+import mail
 
 
 def getData(driver, link):

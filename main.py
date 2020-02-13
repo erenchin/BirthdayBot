@@ -62,10 +62,10 @@ def main():
     # creating message
     if((day0 + day3 + day7) > 0):
         if(day0 > 0):
-            if(day0 is 1):
-                msg = locale.TODAY_1
+            if(day0 > 1):
+                msg = "Today birthday is selebrating:\n"
             else:
-                msg = locale.TODAY_MANY
+                msg = "Today birthday are selebrating:\n"
 
             msg = msg + bday_today + '\n'
 
@@ -78,20 +78,19 @@ def main():
             msg = msg + bday_3_days + '\n'
 
         if(day7 > 0):
-            if(day7 is 1):
-                msg = msg + locale.IN_7_DAYS_1
+            if(day7 > 1):
+                msg = msg + "This employee will have birthday in 7 days:\n"
             else:
-                msg = msg + locale.IN_7_DAYS_MANY
+                msg = msg + "These employees will have they birthdays in 7 days:\n"
 
             msg = msg + bday_7_days + '\n'
 
-        msg = msg + locale.FINAL
+        msg = msg + "Get your presents ready)"
 
         bot = rb()
         bot.login()
         bot.send_mess(msg)
         logging.info("succes send msg")
-
     driver.close()
 
 
