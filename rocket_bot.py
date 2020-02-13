@@ -9,6 +9,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 import logging
+import mail
 
 
 class RocketBot():
@@ -39,21 +40,24 @@ class RocketBot():
 
     def login(self):
 
-        self.driver.get(password.RB_URL)
+        try:
+            self.driver.get(password.RB_URL)
 
-        login_lable = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.NAME, "emailOrUsername")))
-        login_lable.send_keys(password.RB_LOGIN)
+            login_lable = WebDriverWait(self.driver, 10).until(
+                EC.presence_of_element_located((By.NAME, "emailOrUsername")))
+            login_lable.send_keys(password.RB_LOGIN)
 
-        pass_lable = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.NAME, "pass")))
-        pass_lable.send_keys(password.RB_PASSWORD)
+            pass_lable = WebDriverWait(self.driver, 10).until(
+                EC.presence_of_element_located((By.NAME, "pass")))
+            pass_lable.send_keys(password.RB_PASSWORD)
 
-        btn = self.driver.find_element_by_xpath(
-            '/html/body/section/div/form/div[2]/button[1]')
-        btn.click()
+            btn = self.driver.find_element_by_xpath(
+                '/html/body/section/div/form/div[2]/button[1]')
+            btn.click()
 
-        logging.info("success logging at " + password.RB_URL)
+            logging.info("success logging at " + password.RB_URL)
+        except Exception:
+            mail.sendMail("sendmail exception rb.login", mail.initMail())
 
     def send_mess(self, message):
         mess_box = WebDriverWait(self.driver, 10).until(
