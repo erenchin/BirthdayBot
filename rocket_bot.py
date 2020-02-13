@@ -53,7 +53,6 @@ class RocketBot():
             '/html/body/section/div/form/div[2]/button[1]')
         btn.click()
 
-        # TODO: put link in var
         logging.info("success logging at " + password.RB_URL)
 
     def send_mess(self, message):
