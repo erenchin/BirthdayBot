@@ -1,22 +1,25 @@
 #!/usr/bin/python
 # -*- coding: utf-8 - *-
+import logging
+import timeit
 from email.header import Header
 from email.mime.text import MIMEText
 
 from selenium import webdriver
 
 import auth
-from find import is_near, getDataEmployee
-import mail
-import logging
-import password
 import locale_en as locale
+import mail
+import password
+from find import getDataEmployee, is_near
 from rocket_bot import RocketBot as rb
 
 PYTHONIOENCODING = "UTF-8"
 
 
 def main():
+    start = timeit.default_timer()
+
     OWNER = password.OWNER
     bday_today = ""
     bday_3_days = ""
@@ -30,11 +33,44 @@ def main():
     # creating *driver* variable and some settings for browser
     try:
         Options = webdriver.ChromeOptions()
+
+        prefs = {
+            'profile.default_content_setting_values': {
+                'cookies': 2,
+                'images': 2,
+                'javascript': 2,
+                'plugins': 2,
+                'popups': 2,
+                'geolocation': 2,
+                'notifications': 1,
+                'auto_select_certificate': 2,
+                'fullscreen': 2,
+                'mouselock': 2,
+                'mixed_script': 2,
+                'media_stream': 2,
+                'media_stream_mic': 2,
+                'media_stream_camera': 2,
+                'protocol_handlers': 2,
+                'ppapi_broker': 2,
+                'automatic_downloads': 2,
+                'midi_sysex': 2,
+                'push_messaging': 2,
+                'ssl_cert_decisions': 2,
+                'metro_switch_to_desktop': 2,
+                'protected_media_identifier': 2,
+                'app_banner': 2,
+                'site_engagement': 2,
+                'durable_storage': 2
+            }
+        }
+
+        Options.add_experimental_option('prefs', prefs)
+
         Options.add_argument('--headless')
         Options.add_argument('--no-sandbox')
         Options.add_argument('--disable-dev-shm-usage')
         driver = webdriver.Chrome(
-            '/root/serenchin/birthdayBot/chromedriver', chrome_options=Options)
+            'chromedriver', chrome_options=Options)
         logging.info("load webriver")
     except Exception:
         logging.error("error load webriver")
@@ -96,6 +132,9 @@ def main():
         logging.info("there are no b-days today, in 3 or in 7 days")
 
     driver.close()
+
+    stop = timeit.default_timer()
+    print('Time: ', stop - start)
 
 
 main()
